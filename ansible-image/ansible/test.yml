@@ -1,0 +1,7 @@
+---
+- hosts: servers
+  tasks:
+    name: check connection
+    yum:
+      name: vim
+      state: installed

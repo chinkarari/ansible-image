@@ -1,0 +1,32 @@
+version: "2"
+services:
+  ansible:
+    hostname: ansible
+    container_name: ansible-test
+    build: ./ansible-image
+    volumes:
+      - ./ansible-image/ansible:/ansible
+    ports:
+      - "3000:22"
+    networks:
+      ansible_net:
+        ipv4_address: 172.16.32.2
+  centos-ansible:
+    hostname: centos-ansible
+    container_name: centos-ansible-test
+    build: ./centos-image
+    ports:
+      - "3001:22"
+    networks:
+      ansible_net:
+        ipv4_address: 172.16.32.3
+
+networks:
+  ansible_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.32.0/24
+          gateway: 172.16.32.1
+      
